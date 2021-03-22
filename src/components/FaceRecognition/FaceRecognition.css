@@ -86,7 +86,7 @@
 }
 
 .dim {
-  opacity: 1;
+  opacity: 0.8;
   transition: opacity 0.15s ease-in;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .dim:active {
-  opacity: 0.8;
+  opacity: 0.7;
   transition: opacity 0.15s ease-out;
 }
 
