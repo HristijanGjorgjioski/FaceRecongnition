@@ -39,10 +39,11 @@ class App extends React.Component {
       box: {},
       route: 'signin',
       isSignedIn: false,
-      // osobini: [],
+      properties: [],
     };
   }
 
+  /////////////////////////////////////////////
   calculateFaceLocation = (data) => {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -60,11 +61,7 @@ class App extends React.Component {
   displayFaceBox = (box) => {
     this.setState({ box });
   };
-
-  // izlistajOsobini = (osobini) => {
-  //   this.setState({ osobini });
-  //   console.log(this.state.osobini);
-  // };
+  /////////////////////////////////////////////
 
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
@@ -72,21 +69,22 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    // app.models
-    //   .predict(Clarifai.GENERAL_MODEL, this.state.input)
-    //   .then((response) => {
-    //     for (let i = 0; i <= 20; i++) {
-    //       const arr = [];
-    //       arr.push(response.outputs[0].data.concepts[i].name);
-    //       this.izlistajOsobini(arr);
-    //     }
-    //   });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then((response) => {
         this.displayFaceBox(this.calculateFaceLocation(response));
       })
       .catch((err) => console.log(err));
+
+    app.models
+      .predict(Clarifai.GENERAL_MODEL, this.state.input)
+      .then((response) => {
+        let names = [];
+        for (let i in response.outputs[0].data.concepts) {
+          names.push(response.outputs[0].data.concepts[i].name);
+        }
+        this.setState({ properties: names });
+      });
   };
 
   onRouteChange = (route) => {
@@ -99,7 +97,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { isSignedIn, imageUrl, route, box, properties } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particleParams} />
@@ -115,7 +113,11 @@ class App extends React.Component {
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
             />
-            <FaceRecognition box={box} imageUrl={imageUrl} />
+            <FaceRecognition
+              properties={properties}
+              box={box}
+              imageUrl={imageUrl}
+            />
           </div>
         ) : route === 'signin' ? (
           <Signin onRouteChange={this.onRouteChange} />

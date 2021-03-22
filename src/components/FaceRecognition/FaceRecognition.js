@@ -2,13 +2,13 @@ import React from 'react';
 
 import './FaceRecognition.css';
 
-const FaceRecognition = ({ imageUrl, box }) => {
+const FaceRecognition = ({ imageUrl, box, properties }) => {
   return (
     <div className="center ma">
       <div className="absolute mt2">
         <img
           id="inputimage"
-          alt="face"
+          alt=""
           src={imageUrl}
           width="500px"
           height="auto"
@@ -23,6 +23,11 @@ const FaceRecognition = ({ imageUrl, box }) => {
           }}
         ></div>
       </div>
+      <ul>
+        {properties.map((propertie, index) => {
+          return <li key={index}>{propertie}</li>;
+        })}
+      </ul>
     </div>
   );
 };
