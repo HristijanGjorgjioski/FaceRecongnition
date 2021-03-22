@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { createUser } from '../../api/api';
 
@@ -6,13 +7,19 @@ const Register = ({ onRouteChange }) => {
     name: '',
     email: '',
     password: '',
-    status: 'Submit',
   });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const user = userData;
+    axios.post('http://localhost:5000/register', { user });
+    console.log(user, 'userrr');
+  };
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
       <main className="pa4 black-80">
-        <form className="measure" action={createUser} method="POST">
+        <form onSubmit={handleSubmit} className="measure">
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Register</legend>
             <div className="mt3">
@@ -24,8 +31,9 @@ const Register = ({ onRouteChange }) => {
                 type="text"
                 name="name"
                 id="name"
+                value={userData.name}
                 onChange={(e) =>
-                  this.setUserData({ ...userData, name: e.target.value })
+                  setUserData({ ...userData, name: e.target.value })
                 }
               />
             </div>
@@ -38,8 +46,9 @@ const Register = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                value={userData.email}
                 onChange={(e) =>
-                  this.setUserData({ ...userData, email: e.target.value })
+                  setUserData({ ...userData, email: e.target.value })
                 }
               />
             </div>
@@ -52,19 +61,22 @@ const Register = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                value={userData.password}
                 onChange={(e) =>
-                  this.setUserData({ ...userData, password: e.target.value })
+                  setUserData({ ...userData, password: e.target.value })
                 }
               />
             </div>
           </fieldset>
           <div className="">
-            <input
-              onClick={() => onRouteChange('home')}
-              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+            <button
+              // onClick={() => onRouteChange('home')}
+              className="b ph3 pv2 ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
-            />
+            >
+              Submit
+            </button>
           </div>
         </form>
       </main>
