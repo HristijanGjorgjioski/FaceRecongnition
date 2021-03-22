@@ -40,6 +40,7 @@ class App extends React.Component {
       route: 'signin',
       isSignedIn: false,
       properties: [],
+      imageHeight: '',
     };
   }
 
@@ -50,6 +51,7 @@ class App extends React.Component {
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
+    this.setState({ imageHeight: height });
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -97,7 +99,14 @@ class App extends React.Component {
   };
 
   render() {
-    const { isSignedIn, imageUrl, route, box, properties } = this.state;
+    const {
+      isSignedIn,
+      imageUrl,
+      route,
+      box,
+      properties,
+      imageHeight,
+    } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particleParams} />
@@ -117,6 +126,7 @@ class App extends React.Component {
               properties={properties}
               box={box}
               imageUrl={imageUrl}
+              imageHeight={imageHeight}
             />
           </div>
         ) : route === 'signin' ? (
