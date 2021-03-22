@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createUser } from '../../api/api';
 
 const Register = ({ onRouteChange }) => {
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    status: 'Submit',
+  });
+
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
       <main className="pa4 black-80">
-        <form className="measure">
+        <form className="measure" action={createUser} method="POST">
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Register</legend>
             <div className="mt3">
@@ -16,6 +24,9 @@ const Register = ({ onRouteChange }) => {
                 type="text"
                 name="name"
                 id="name"
+                onChange={(e) =>
+                  this.setUserData({ ...userData, name: e.target.value })
+                }
               />
             </div>
             <div className="mt3">
@@ -27,6 +38,9 @@ const Register = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                onChange={(e) =>
+                  this.setUserData({ ...userData, email: e.target.value })
+                }
               />
             </div>
             <div className="mv3">
@@ -38,6 +52,9 @@ const Register = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                onChange={(e) =>
+                  this.setUserData({ ...userData, password: e.target.value })
+                }
               />
             </div>
           </fieldset>
