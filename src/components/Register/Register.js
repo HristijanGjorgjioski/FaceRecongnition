@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 const Register = ({ onRouteChange }) => {
+  const url = 'http://localhost:5000/register';
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -11,18 +12,25 @@ const Register = ({ onRouteChange }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const promise = await axios.post(url, userData);
 
-    if (userData.password.length < 4) {
+    if (JSON.stringify(promise.data).length === 14) {
       onRouteChange('register');
-      return userData.msg.push('Password must contain at least 4 characters');
-    } else if (userData.name.length < 4) {
+      return userData.msg.push('E-Mail Taken, try another one');
+    }
+    console.log(userData.msg);
+
+    if (userData.name.length < 4) {
       userData.msg.splice(0, 1);
       onRouteChange('register');
       return userData.msg.push('Name must contain at least 4 characters');
+    } else if (userData.password.length < 4) {
+      userData.msg.splice(0, 1);
+      onRouteChange('register');
+      return userData.msg.push('Password must contain at least 4 characters');
     } else {
-      console.log(userData.name, userData.password, 'else');
       onRouteChange('signin');
-      return axios.post('http://localhost:5000/register', userData);
+      return await axios.post(url, userData);
     }
   };
 
