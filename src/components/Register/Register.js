@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { createUser } from '../../api/api';
 
 const Register = ({ onRouteChange }) => {
   const [userData, setUserData] = useState({
@@ -11,9 +10,8 @@ const Register = ({ onRouteChange }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const user = userData;
-    axios.post('http://localhost:5000/register', { user });
-    console.log(user, 'userrr');
+    axios.post('http://localhost:5000/register', userData);
+    onRouteChange('home');
   };
 
   return (
@@ -70,12 +68,11 @@ const Register = ({ onRouteChange }) => {
           </fieldset>
           <div className="">
             <button
-              // onClick={() => onRouteChange('home')}
               className="b ph3 pv2 ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
             >
-              Submit
+              Register
             </button>
           </div>
         </form>
