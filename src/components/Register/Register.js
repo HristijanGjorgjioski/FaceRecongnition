@@ -6,12 +6,24 @@ const Register = ({ onRouteChange }) => {
     name: '',
     email: '',
     password: '',
+    msg: [],
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/register', userData);
-    onRouteChange('home');
+
+    if (userData.password.length < 4) {
+      onRouteChange('register');
+      return userData.msg.push('Password must contain at least 4 characters');
+    } else if (userData.name.length < 4) {
+      userData.msg.splice(0, 1);
+      onRouteChange('register');
+      return userData.msg.push('Name must contain at least 4 characters');
+    } else {
+      console.log(userData.name, userData.password, 'else');
+      onRouteChange('signin');
+      return axios.post('http://localhost:5000/register', userData);
+    }
   };
 
   return (
@@ -33,6 +45,7 @@ const Register = ({ onRouteChange }) => {
                 onChange={(e) =>
                   setUserData({ ...userData, name: e.target.value })
                 }
+                required
               />
             </div>
             <div className="mt3">
@@ -48,6 +61,7 @@ const Register = ({ onRouteChange }) => {
                 onChange={(e) =>
                   setUserData({ ...userData, email: e.target.value })
                 }
+                required
               />
             </div>
             <div className="mv3">
@@ -63,6 +77,7 @@ const Register = ({ onRouteChange }) => {
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value })
                 }
+                required
               />
             </div>
           </fieldset>
@@ -75,6 +90,7 @@ const Register = ({ onRouteChange }) => {
               Register
             </button>
           </div>
+          {userData.msg.length > 0 ? <h4>{userData.msg[0]}</h4> : <div></div>}
         </form>
       </main>
     </article>
