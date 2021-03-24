@@ -18,7 +18,6 @@ const Register = ({ onRouteChange }) => {
       onRouteChange('register');
       return userData.msg.push('E-Mail Taken, try another one');
     }
-    console.log(userData.msg);
 
     if (userData.name.length < 4) {
       userData.msg.splice(0, 1);
