@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 const Register = ({ onRouteChange }) => {
-  const url = 'http://localhost:5000/register';
+  const url = 'https://face-recognition-api-hg.herokuapp.com/register';
   const [userData, setUserData] = useState({
     name: '',
     email: '',
