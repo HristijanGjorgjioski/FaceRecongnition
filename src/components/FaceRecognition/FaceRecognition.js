@@ -28,14 +28,14 @@ const FaceRecognition = ({ imageUrl, box, properties, imageHeight }) => {
           {properties.map((propertie, index) => {
             if (index === 5 || index === 10 || index === 15) {
               return (
-                <>
-                  <li className="dib mr1 mb2" key={index}>
+                <div key={index}>
+                  <li className="dib mr1 mb2">
                     <button className="f6 f5-ns b db pa2 link dim dark-gray ba b--black-20">
                       {propertie}
                     </button>
                   </li>
                   <br />
-                </>
+                </div>
               );
             } else {
               return (

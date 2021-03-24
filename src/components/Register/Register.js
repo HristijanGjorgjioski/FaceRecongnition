@@ -14,19 +14,17 @@ const Register = ({ onRouteChange }) => {
     event.preventDefault();
     const promise = await axios.post(url, userData);
 
-    if (JSON.stringify(promise.data).length === 14) {
-      onRouteChange('register');
-      return userData.msg.push('E-Mail Taken, try another one');
-    }
-
     if (userData.name.length < 4) {
       userData.msg.splice(0, 1);
+      userData.msg.push('Name must contain at least 4 characters');
       onRouteChange('register');
-      return userData.msg.push('Name must contain at least 4 characters');
     } else if (userData.password.length < 4) {
       userData.msg.splice(0, 1);
+      userData.msg.push('Password must contain at least 4 characters');
       onRouteChange('register');
-      return userData.msg.push('Password must contain at least 4 characters');
+    } else if (promise.data.length === 12) {
+      userData.msg.push('E-Mail Taken, try another one');
+      onRouteChange('register');
     } else {
       onRouteChange('signin');
       return await axios.post(url, userData);
