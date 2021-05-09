@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
-import Signin from './components/Signin/Signin';
-import Register from './components/Register/Register';
-import Navigation from './components/Navigation/Navigation';
+// import Signin from './components/Signin/Signin';
+// import Register from './components/Register/Register';
+// import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
@@ -29,14 +29,18 @@ const particleParams = {
 };
 
 const App = () => {
+  const [imageUrl, setImageUrl] = useState('')
+  const [input, setInput] = useState('')
+  const [box, setBox] = useState('')
+  const [properties, setProperties] = useState('')
+  const [imageHeight, setImageHeight] = useState('')
+
   /////////////////////////////////////////////
   const calculateFaceLocation = (data) => {
-    const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    this.setState({ imageHeight: height });
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    const width = Number(imageUrl.width)
+    const height = Number(imageUrl.height)
+    setImageHeight(height);
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -46,38 +50,40 @@ const App = () => {
   };
 
   const displayFaceBox = (box) => {
-    this.setState({ box });
+    setBox(box);
   };
   /////////////////////////////////////////////
 
   const onInputChange = (event) => {
-    this.setState({ input: event.target.value });
+    setInput(event.target.value)
   };
 
   const onButtonSubmit = () => {
-    this.setState({ imageUrl: this.state.input });
+    setImageUrl(input);
     app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .predict(Clarifai.FACE_DETECT_MODEL, input)
       .then((response) => {
-        this.displayFaceBox(calculateFaceLocation(response));
+        displayFaceBox(calculateFaceLocation(response));
       })
       .catch((err) => console.log(err));
 
     app.models
-      .predict(Clarifai.GENERAL_MODEL, this.state.input)
+      .predict(Clarifai.GENERAL_MODEL, input)
       .then((response) => {
         let names = [];
         for (let i in response.outputs[0].data.concepts) {
           names.push(response.outputs[0].data.concepts[i].name);
         }
-        this.setState({ properties: names });
+        setProperties(names);
       });
   };
 
     return (
       <div className="App">
         <Particles className="particles" params={particleParams} />
-        <Navigation isSignedIn={isSignedIn} />
+        {/* <Navigation 
+          // isSignedIn={isSignedIn} 
+        /> */}
           <div>
             <Logo />
             <ImageLinkForm
@@ -91,8 +97,8 @@ const App = () => {
               imageHeight={imageHeight}
             />
           </div>
-          <Signin />
-          <Register />
+          {/* <Signin /> */}
+          {/* <Register /> */}
       </div>
     );
 }

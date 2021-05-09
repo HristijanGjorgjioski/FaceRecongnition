@@ -24,7 +24,7 @@ const FaceRecognition = ({ imageUrl, box, properties, imageHeight }) => {
         ></div>
       </div>
       <div style={{ marginTop: imageHeight }} width="500px" height="auto">
-        <ul className="list ph3 ph5-ns pv4">
+        {/* <ul className="list ph3 ph5-ns pv4">
           {properties.map((propertie, index) => {
             if (index === 5 || index === 10 || index === 15) {
               return (
@@ -47,7 +47,7 @@ const FaceRecognition = ({ imageUrl, box, properties, imageHeight }) => {
               );
             }
           })}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

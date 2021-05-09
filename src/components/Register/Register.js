@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { useAuth } from '../../context/AuthContext'
 
-const Register = ({ onRouteChange }) => {
+const Register = () => {
   const { signup } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
