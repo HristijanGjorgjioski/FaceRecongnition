@@ -1,8 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 
 const Register = ({ onRouteChange }) => {
-  const url = 'https://face-recognition-api-hg.herokuapp.com/register';
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -12,23 +10,8 @@ const Register = ({ onRouteChange }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const promise = await axios.post(url, userData);
+    // const promise = await axios.post(url, userData);
 
-    if (userData.name.length < 4) {
-      userData.msg.splice(0, 1);
-      userData.msg.push('Name must contain at least 4 characters');
-      onRouteChange('register');
-    } else if (userData.password.length < 4) {
-      userData.msg.splice(0, 1);
-      userData.msg.push('Password must contain at least 4 characters');
-      onRouteChange('register');
-    } else if (promise.data.length === 12) {
-      userData.msg.push('E-Mail Taken, try another one');
-      onRouteChange('register');
-    } else {
-      onRouteChange('signin');
-      return await axios.post(url, userData);
-    }
   };
 
   return (

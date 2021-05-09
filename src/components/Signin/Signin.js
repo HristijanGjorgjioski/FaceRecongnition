@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Signin = ({ onRouteChange }) => {
-  const url = 'https://face-recognition-api-hg.herokuapp.com/login';
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -11,21 +9,6 @@ const Signin = ({ onRouteChange }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const promise = await axios.post(url, userData);
-    const lengthPromise = JSON.stringify(promise.data).length;
-
-    try {
-      if (lengthPromise === 17) {
-        onRouteChange('home');
-        return await axios.post(url, userData);
-      } else {
-        onRouteChange('signin');
-        userData.msg.push('E-Mail or password is incorrect');
-        onRouteChange('signin');
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
