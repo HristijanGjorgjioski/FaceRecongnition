@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+
+import { useAuth } from '../../context/AuthContext'
 
 const Register = ({ onRouteChange }) => {
-  const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    msg: [],
-  });
+  const { signup } = useAuth()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // const promise = await axios.post(url, userData);
+  const nameRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
 
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+  }
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
@@ -29,11 +33,8 @@ const Register = ({ onRouteChange }) => {
                 type="text"
                 name="name"
                 id="name"
-                value={userData.name}
-                onChange={(e) =>
-                  setUserData({ ...userData, name: e.target.value })
-                }
                 required
+                ref={nameRef}
               />
             </div>
             <div className="mt3">
@@ -45,11 +46,8 @@ const Register = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
-                value={userData.email}
-                onChange={(e) =>
-                  setUserData({ ...userData, email: e.target.value })
-                }
                 required
+                ref={emailRef}
               />
             </div>
             <div className="mv3">
@@ -61,11 +59,8 @@ const Register = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
-                value={userData.password}
-                onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
-                }
                 required
+                ref={passwordRef}
               />
             </div>
           </fieldset>
@@ -78,11 +73,10 @@ const Register = ({ onRouteChange }) => {
               Register
             </button>
           </div>
-          {userData.msg.length > 0 ? <h4>{userData.msg[0]}</h4> : <div></div>}
         </form>
       </main>
     </article>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
