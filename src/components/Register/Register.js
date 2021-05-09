@@ -15,12 +15,22 @@ const Register = ({ onRouteChange }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
+    try {
+      setLoading(true)
+      await signup(emailRef.current.value, passwordRef.current.value)
+      history.push('/')  
+    } catch (error) {
+      setError('Failed to create an account')
+    }
+
+    setLoading(false)
   }
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
       <main className="pa4 black-80">
+        {error && <h4>{error}</h4>}
         <form onSubmit={handleSubmit} className="measure">
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Register</legend>
@@ -69,6 +79,7 @@ const Register = ({ onRouteChange }) => {
               className="b ph3 pv2 ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
+              disabled={loading}
             >
               Register
             </button>

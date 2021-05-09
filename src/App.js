@@ -28,23 +28,9 @@ const particleParams = {
   },
 };
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      input: '',
-      imageUrl: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      properties: [],
-      imageHeight: '',
-    };
-  }
-
+const App = () => {
   /////////////////////////////////////////////
-  calculateFaceLocation = (data) => {
+  const calculateFaceLocation = (data) => {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputimage');
@@ -59,21 +45,21 @@ class App extends React.Component {
     };
   };
 
-  displayFaceBox = (box) => {
+  const displayFaceBox = (box) => {
     this.setState({ box });
   };
   /////////////////////////////////////////////
 
-  onInputChange = (event) => {
+  const onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
 
-  onButtonSubmit = () => {
+  const onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then((response) => {
-        this.displayFaceBox(this.calculateFaceLocation(response));
+        this.displayFaceBox(calculateFaceLocation(response));
       })
       .catch((err) => console.log(err));
 
@@ -88,37 +74,15 @@ class App extends React.Component {
       });
   };
 
-  onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState({ isSignedIn: false });
-    } else if (route === 'home') {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route });
-  };
-
-  render() {
-    const {
-      isSignedIn,
-      imageUrl,
-      route,
-      box,
-      properties,
-      imageHeight,
-    } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particleParams} />
-        <Navigation
-          isSignedIn={isSignedIn}
-          onRouteChange={this.onRouteChange}
-        />
-        {route === 'home' ? (
+        <Navigation isSignedIn={isSignedIn} />
           <div>
             <Logo />
             <ImageLinkForm
-              onInputChange={this.onInputChange}
-              onButtonSubmit={this.onButtonSubmit}
+              onInputChange={onInputChange}
+              onButtonSubmit={onButtonSubmit}
             />
             <FaceRecognition
               properties={properties}
@@ -127,14 +91,10 @@ class App extends React.Component {
               imageHeight={imageHeight}
             />
           </div>
-        ) : route === 'signin' ? (
-          <Signin onRouteChange={this.onRouteChange} />
-        ) : (
-          <Register onRouteChange={this.onRouteChange} />
-        )}
+          <Signin />
+          <Register />
       </div>
     );
-  }
 }
 
 export default App;
