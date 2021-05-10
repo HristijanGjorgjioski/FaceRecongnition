@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
@@ -34,46 +34,36 @@ const App = () => {
   const [input, setInput] = useState('')
   const [box, setBox] = useState({})
   // const [properties, setProperties] = useState('')
-  const [imageHeight, setImageHeight] = useState('')
 
   /////////////////////////////////////////////
-  const calculateFaceLocation = (data) => {
+  const calculateFaceLocation = async (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
     setImageUrl(data.outputs[0].input.data.image.url)
-    console.log(data.outputs[0].input.data.image.url, 'calculateFaceLocation')
-    const imgDimensions = dimensions(input)
+
+    const imgDimensions = await dimensions(input)
     const width = imgDimensions.width
     const height = imgDimensions.height
-    console.log(height)
-    console.log(imgDimensions)
-    setImageHeight(height);
+
     const newBox = {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - clarifaiFace.right_col * width,
       bottomRow: height - clarifaiFace.bottom_row * height,
     }
-
     setBox(newBox)
+    console.log(box, 'boxxx')
   }
   /////////////////////////////////////////////
-
-  useEffect(() => {
-    console.log(box, 'BOX')
-  }, [box])
 
   const onInputChange = (event) => {
     setInput(event.target.value)
   };
 
   const onButtonSubmit = () => {
-    // setImageUrl(input);
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, input)
       .then((data) => {
         calculateFaceLocation(data)
-        console.log(data)
-        // setBox(data.outputs[0].data.regions[0].region_info.bounding_box)
       })
       .catch((err) => console.log(err));
 
@@ -91,9 +81,7 @@ const App = () => {
     return (
       <div className="App">
         <Particles className="particles" params={particleParams} />
-        {/* <Navigation 
-          // isSignedIn={isSignedIn} 
-        /> */}
+        
           <div>
             <Logo />
             <ImageLinkForm
@@ -104,13 +92,11 @@ const App = () => {
               // properties={properties}
               box={box}
               imageUrl={imageUrl}
-              imageHeight={imageHeight}
             />
           </div>
-          {/* <Signin /> */}
-          {/* <Register /> */}
+          
       </div>
-    );
+    )
 }
 
 export default App;
