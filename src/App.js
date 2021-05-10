@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
@@ -37,36 +37,39 @@ const App = () => {
 
   /////////////////////////////////////////////
   const calculateFaceLocation = async (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
-    setImageUrl(data.outputs[0].input.data.image.url)
+      const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
+      setImageUrl(data.outputs[0].input.data.image.url)
 
-    const imgDimensions = await dimensions(input)
-    const width = imgDimensions.width
-    const height = imgDimensions.height
+      const imgDimensions = await dimensions(imageUrl)
+      const width = imgDimensions.width
+      const height = imgDimensions.height
 
-    const newBox = {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
-    }
-    setBox(newBox)
-    console.log(box, 'boxxx')
+      setBox({
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - clarifaiFace.right_col * width,
+        bottomRow: height - clarifaiFace.bottom_row - height,
+      })
+      // return ({
+      //   leftCol: clarifaiFace.left_col * width,
+      //   topRow: clarifaiFace.top_row * height,
+      //   rightCol: width - clarifaiFace.right_col * width,
+      //   bottomRow: height - clarifaiFace.bottom_row * height,
+      // })
   }
   /////////////////////////////////////////////
+
+  useEffect(() => {
+    
+  }, [box])
 
   const onInputChange = (event) => {
     setInput(event.target.value)
   };
 
-  const onButtonSubmit = () => {
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, input)
-      .then((data) => {
-        calculateFaceLocation(data)
-      })
-      .catch((err) => console.log(err));
-
+  const onButtonSubmit = async () => {
+    const data = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
+    calculateFaceLocation(data)
     // app.models
     //   .predict(Clarifai.GENERAL_MODEL, input)
     //   .then((response) => {
