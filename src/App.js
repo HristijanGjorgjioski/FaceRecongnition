@@ -11,6 +11,7 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
 import './App.css';
+import dimensions from './utils/dimensions';
 
 const app = new Clarifai.App({
   apiKey: 'a5d94266a9474a5aa1da2b85b3489688',
@@ -36,19 +37,25 @@ const App = () => {
   const [imageHeight, setImageHeight] = useState('')
 
   /////////////////////////////////////////////
-  // const calculateFaceLocation = (data) => {
-  //   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
-  //   const width = Number(input.width)
-  //   const height = Number(input.height)
-  //   console.log(box)
-  //   setImageHeight(height);
-  //   return {
-  //     leftCol: clarifaiFace.left_col * width,
-  //     topRow: clarifaiFace.top_row * height,
-  //     rightCol: width - clarifaiFace.right_col * width,
-  //     bottomRow: height - clarifaiFace.bottom_row * height,
-  //   };
-  // };
+  const calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    setImageUrl(data.outputs[0].input.data.image.url)
+    console.log(data.outputs[0].input.data.image.url, 'calculateFaceLocation')
+    const imgDimensions = dimensions(input)
+    const width = imgDimensions.width
+    const height = imgDimensions.height
+    console.log(height)
+    console.log(imgDimensions)
+    setImageHeight(height);
+    const newBox = {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - clarifaiFace.right_col * width,
+      bottomRow: height - clarifaiFace.bottom_row * height,
+    }
+
+    setBox(newBox)
+  }
   /////////////////////////////////////////////
 
   useEffect(() => {
@@ -60,14 +67,13 @@ const App = () => {
   };
 
   const onButtonSubmit = () => {
-    setImageUrl(input);
+    // setImageUrl(input);
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, input)
       .then((data) => {
-        // setBox(calculateFaceLocation(response))
-        setBox(data.outputs[0].data.regions[0].region_info.bounding_box)
-        console.log(data, 'responseAPI')
-        console.log(box, 'BOX')
+        calculateFaceLocation(data)
+        console.log(data)
+        // setBox(data.outputs[0].data.regions[0].region_info.bounding_box)
       })
       .catch((err) => console.log(err));
 
