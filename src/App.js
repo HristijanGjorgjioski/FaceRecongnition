@@ -33,7 +33,6 @@ const App = () => {
   const [imageUrl, setImageUrl] = useState('')
   const [input, setInput] = useState('')
   const [box, setBox] = useState({})
-  // const [properties, setProperties] = useState('')
 
   /////////////////////////////////////////////
   const calculateFaceLocation = async (data) => {
@@ -43,24 +42,19 @@ const App = () => {
       const imgDimensions = await dimensions(imageUrl)
       const width = imgDimensions.width
       const height = imgDimensions.height
-
-      setBox({
+      console.log(data);
+      console.log(imgDimensions)
+      return setBox({
         leftCol: clarifaiFace.left_col * width,
         topRow: clarifaiFace.top_row * height,
-        rightCol: width - clarifaiFace.right_col * width,
-        bottomRow: height - clarifaiFace.bottom_row - height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height),
       })
-      // return ({
-      //   leftCol: clarifaiFace.left_col * width,
-      //   topRow: clarifaiFace.top_row * height,
-      //   rightCol: width - clarifaiFace.right_col * width,
-      //   bottomRow: height - clarifaiFace.bottom_row * height,
-      // })
   }
   /////////////////////////////////////////////
 
   useEffect(() => {
-    
+    console.log(box)
   }, [box])
 
   const onInputChange = (event) => {
@@ -70,15 +64,6 @@ const App = () => {
   const onButtonSubmit = async () => {
     const data = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
     calculateFaceLocation(data)
-    // app.models
-    //   .predict(Clarifai.GENERAL_MODEL, input)
-    //   .then((response) => {
-    //     let names = [];
-    //     for (let i in response.outputs[0].data.concepts) {
-    //       names.push(response.outputs[0].data.concepts[i].name);
-    //     }
-    //     setProperties(names);
-    //   });
   };
 
     return (
@@ -92,7 +77,6 @@ const App = () => {
               onButtonSubmit={onButtonSubmit}
             />
             <FaceRecognition
-              // properties={properties}
               box={box}
               imageUrl={imageUrl}
             />
