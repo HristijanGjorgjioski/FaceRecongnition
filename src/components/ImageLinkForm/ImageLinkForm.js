@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Clarifai from 'clarifai'
+
+import { ImageContext } from '../../context/ImageContext';
+import CalculateFaceLocation from '../../utils/CalculateFaceLocation';
+import ClarifaiApp from '../../utils/Clarifai';
 import './ImageLinkForm.css';
 
 const ImageLinkForm = () => {
-  // const onButtonSubmit = async () => {
-  //   const data = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
-  //   calculateFaceLocation(data)
-  // };
+  const { setInput, input } = useContext(ImageContext)
 
-  // const onInputChange = (event) => {
-  //   setInput(event.target.value)
-  // };
+  const onButtonSubmit = async () => {
+    const data = await ClarifaiApp.models.predict(Clarifai.FACE_DETECT_MODEL, input)
+    CalculateFaceLocation(data)
+  }
+
+  const onInputChange = (event) => {
+    setInput(event.target.value)
+  }
 
   return (
     <div>

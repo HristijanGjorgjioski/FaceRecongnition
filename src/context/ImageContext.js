@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { createContext, useEffect, useState } from "react"
 
-const ImageContext = React.createContext()
+const inititalState = []
 
-export const useImage = () => {
-    return useContext(ImageContext)
-}
+export const ImageContext = createContext(inititalState)
 
 export const ImageProvider = ({ children }) => {
     const [imageUrl, setImageUrl] = useState('')

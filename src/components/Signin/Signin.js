@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Signin = ({ onRouteChange }) => {
+const Signin = () => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',

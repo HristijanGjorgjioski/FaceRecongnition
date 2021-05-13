@@ -1,15 +1,19 @@
+import { useContext } from 'react'
+
+import { ImageContext } from '../context/ImageContext'
 import dimensions from './dimensions'
 
-const calculateFaceLocation = async (data) => {
+const CalculateFaceLocation = async (data) => {
+    const { setBox, setImageUrl, imageUrl } = useContext(ImageContext)
+
     const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
     setImageUrl(data.outputs[0].input.data.image.url)
 
     const imgDimensions = await dimensions(imageUrl)
     const width = imgDimensions.width
     const height = imgDimensions.height
-    console.log(data);
-    console.log(imgDimensions)
-    return setBox({
+
+    setBox({
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
@@ -17,4 +21,4 @@ const calculateFaceLocation = async (data) => {
     })
 }
 
-export default calculateFaceLocation
+export default CalculateFaceLocation
