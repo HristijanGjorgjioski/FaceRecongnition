@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
-import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 
 // import Signin from './components/Signin/Signin';
 // import Register from './components/Register/Register';
@@ -12,27 +10,12 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
 import './App.css';
 import dimensions from './utils/dimensions';
+import ParticleComponent from './components/Particles/Particles';
 
-const app = new Clarifai.App({
-  apiKey: 'a5d94266a9474a5aa1da2b85b3489688',
-});
 
-const particleParams = {
-  particles: {
-    number: {
-      value: 40,
-      density: {
-        enable: true,
-        value_area: 500,
-      },
-    },
-  },
-};
 
 const App = () => {
-  const [imageUrl, setImageUrl] = useState('')
-  const [input, setInput] = useState('')
-  const [box, setBox] = useState({})
+  
 
   /////////////////////////////////////////////
   const calculateFaceLocation = async (data) => {
@@ -68,7 +51,7 @@ const App = () => {
 
     return (
       <div className="App">
-        <Particles className="particles" params={particleParams} />
+        <ParticleComponent />
         
           <div>
             <Logo />
