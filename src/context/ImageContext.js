@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 const ImageContext = React.createContext()
 
 export const useImage = () => {
-    return useContext(AuthContext)
+    return useContext(ImageContext)
 }
 
 export const ImageProvider = ({ children }) => {

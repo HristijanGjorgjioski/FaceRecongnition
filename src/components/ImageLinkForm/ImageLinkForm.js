@@ -1,7 +1,16 @@
 import React from 'react';
 import './ImageLinkForm.css';
 
-const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
+const ImageLinkForm = () => {
+  // const onButtonSubmit = async () => {
+  //   const data = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
+  //   calculateFaceLocation(data)
+  // };
+
+  // const onInputChange = (event) => {
+  //   setInput(event.target.value)
+  // };
+
   return (
     <div>
       <p className="f3">
@@ -18,7 +27,7 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ImageLinkForm;
+export default ImageLinkForm

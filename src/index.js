@@ -6,10 +6,13 @@ import './index.css';
 
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
+import { ImageProvider } from './context/ImageContext';
 
 ReactDOM.render(
     <AuthProvider>
-        <App />
+        <ImageProvider>
+            <App />
+        </ImageProvider>
     </AuthProvider>,
     document.getElementById('root')
 );
