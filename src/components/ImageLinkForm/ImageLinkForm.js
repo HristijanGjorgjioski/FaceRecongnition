@@ -1,18 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react'
 import Clarifai from 'clarifai'
 
-import { ImageContext } from '../../context/ImageContext';
-import CalculateFaceLocation from '../../utils/CalculateFaceLocation';
-import ClarifaiApp from '../../utils/Clarifai';
-import './ImageLinkForm.css';
+import { ImageContext } from '../../context/ImageContext'
+// import CalculateFaceLocation from '../../utils/CalculateFaceLocation'
+import ClarifaiApp from '../../utils/Clarifai'
+import dimensions from '../../utils/dimensions'
+import './ImageLinkForm.css'
 
 const ImageLinkForm = () => {
-  const { setInput, input } = useContext(ImageContext)
+  const { setInput, input, setBox, imageUrl, setImageUrl, box } = useContext(ImageContext)
 
   const onButtonSubmit = async () => {
     const data = await ClarifaiApp.models.predict(Clarifai.FACE_DETECT_MODEL, input)
-    CalculateFaceLocation(data)
+    const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
+    setImageUrl(data.outputs[0].input.data.image.url)
+
+    const imgDimensions = await dimensions(imageUrl)
+    const width = imgDimensions.width
+    const height = imgDimensions.height
+
+    setBox({
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height),
+    })
   }
+
+  useEffect(() => {
+    console.log(box)
+  }, [box])
 
   const onInputChange = (event) => {
     setInput(event.target.value)

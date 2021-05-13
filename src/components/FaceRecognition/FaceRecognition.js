@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
+import { ImageContext } from '../../context/ImageContext'
 import './FaceRecognition.css';
 
-const FaceRecognition = ({ imageUrl, box }) => {
+const FaceRecognition = () => {
+  const { box, imageUrl } = useContext(ImageContext)
   return (
     <div className="center ma">
       <div className="absolute mt2">
@@ -22,10 +24,10 @@ const FaceRecognition = ({ imageUrl, box }) => {
           //   bottom: box.bottomRow,
           // }}
           style={{
-            top: '10px',
-            right: '58px',
-            left: '56px',
-            bottom: '80px',
+            top: '12px',
+            right: '278px',
+            left: '22px',
+            bottom: '72px',
           }}
         ></div>
       </div>
