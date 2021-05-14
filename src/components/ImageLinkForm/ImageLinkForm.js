@@ -15,15 +15,23 @@ const ImageLinkForm = () => {
     const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
     setImageUrl(data.outputs[0].input.data.image.url)
 
-    const imgDimensions = await dimensions(imageUrl)
-    const width = imgDimensions.width
-    const height = imgDimensions.height
+    // const imgDimensions = await dimensions(data.outputs[0].input.data.image.url)
+    // const width = imgDimensions.width
+    // const height = imgDimensions.height
+
+    const theImage = new Image()
+    theImage.src = imageUrl
+
+    console.log(data.outputs[0].input.data.image.url, 'imgUrl')
+    console.log(input, 'INPUT')
+
+    console.log(theImage.width)
 
     setBox({
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height),
+      leftCol: clarifaiFace.left_col * theImage.width,
+      topRow: clarifaiFace.top_row * theImage.height,
+      rightCol: theImage.width - (clarifaiFace.right_col * theImage.width),
+      bottomRow: theImage.height - (clarifaiFace.bottom_row * theImage.height),
     })
   }
 

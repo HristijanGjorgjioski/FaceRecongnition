@@ -17,18 +17,18 @@ const FaceRecognition = () => {
         />
         <div
           className="bounding-box"
-          // style={{
-          //   top: box.topRow,
-          //   right: box.rightCol,
-          //   left: box.leftCol,
-          //   bottom: box.bottomRow,
-          // }}
           style={{
-            top: '12px',
-            right: '278px',
-            left: '22px',
-            bottom: '72px',
+            top: box.rightCol,
+            right: box.topRow,
+            left: box.bottomRow,
+            bottom: box.leftCol,
           }}
+          // style={{
+          //   top: '12px',
+          //   right: '278px',
+          //   left: '22px',
+          //   bottom: '72px',
+          // }}
         ></div>
       </div>
     </div>
