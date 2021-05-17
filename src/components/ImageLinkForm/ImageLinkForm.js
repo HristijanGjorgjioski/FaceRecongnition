@@ -2,9 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import Clarifai from 'clarifai'
 
 import { ImageContext } from '../../context/ImageContext'
-// import CalculateFaceLocation from '../../utils/CalculateFaceLocation'
 import ClarifaiApp from '../../utils/Clarifai'
-import dimensions from '../../utils/dimensions'
 import './ImageLinkForm.css'
 
 const ImageLinkForm = () => {
@@ -12,7 +10,7 @@ const ImageLinkForm = () => {
 
   const onButtonSubmit = async () => {
     const data = await ClarifaiApp.models.predict(Clarifai.FACE_DETECT_MODEL, input)
-    const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
+    const clarifaiFace = data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
     setImageUrl(data.outputs[0].input.data.image.url)
 
     const image = document.getElementById('inputimage')
@@ -21,9 +19,9 @@ const ImageLinkForm = () => {
 
     setBox({
       leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
+      topRow: clarifaiFace?.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height),
+      bottomRow: height - (clarifaiFace?.bottom_row * height)
     })
   }
 
@@ -45,7 +43,7 @@ const ImageLinkForm = () => {
       <div className="center">
         <div className="form center pa4 br3 shadow-5">
           <input className="f4 pa2 w-70 center" type="text" onChange={onInputChange} placeholder="Image Url Here" />
-          <button className="w-30 grow f4 link ph3 pv2 dib  pointer" onClick={onButtonSubmit}>
+          <button className="w-30 grow f4 link ph3 pv2 dib  pointer" onClick={() => onButtonSubmit()}>
             Detect
           </button>
         </div>
