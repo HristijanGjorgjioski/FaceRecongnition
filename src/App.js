@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 // import Signin from './components/Signin/Signin';
 // import Register from './components/Register/Register';
@@ -9,8 +9,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
 import './App.css';
 import ParticleComponent from './components/Particles/Particles';
-
-
 
 const App = () => {
     return (
