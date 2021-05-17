@@ -8,16 +8,12 @@ import dimensions from '../../utils/dimensions'
 import './ImageLinkForm.css'
 
 const ImageLinkForm = () => {
-  const { setInput, input, setBox, imageUrl, setImageUrl, box } = useContext(ImageContext)
+  const { setInput, input, setBox, setImageUrl, box } = useContext(ImageContext)
 
   const onButtonSubmit = async () => {
     const data = await ClarifaiApp.models.predict(Clarifai.FACE_DETECT_MODEL, input)
     const clarifaiFace = await data?.outputs[0]?.data?.regions[0]?.region_info?.bounding_box
     setImageUrl(data.outputs[0].input.data.image.url)
-
-    const imgDimensions = await dimensions(data.outputs[0].input.data.image.url)
-    //const width = imgDimensions.width
-    //const height = imgDimensions.height
 
     const image = document.getElementById('inputimage')
     const width = Number(image.width)
