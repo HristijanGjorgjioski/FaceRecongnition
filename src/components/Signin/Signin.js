@@ -34,9 +34,7 @@ const Signin = () => {
               />
             </div>
             <div className="mv3">
-              <label className="db fw6 lh-copy f6" htmlFor="password">
-                Password
-              </label>
+              <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
               <input
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="password"
@@ -51,26 +49,13 @@ const Signin = () => {
             </div>
           </fieldset>
           <div className="">
-            <input
-              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
-              value="Sign in"
-            />
-          </div>
-          <div className="lh-copy mt3">
-            <p
-              onClick={() => {}}
-              href="#0"
-              className="f6 link dim black db pointer"
-            >
-              Register
-            </p>
+            <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in" />
           </div>
           {userData.msg.length > 0 ? <h4>{userData.msg[0]}</h4> : <div></div>}
         </form>
       </main>
     </article>
-  );
-};
+  )
+}
 
-export default Signin;
+export default Signin
