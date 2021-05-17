@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import Clarifai from 'clarifai'
 
-import { ImageContext } from '../../context/ImageContext'
-import ClarifaiApp from '../../utils/Clarifai'
+import { ImageContext } from '../../../context/ImageContext'
+import ClarifaiApp from '../../../utils/Clarifai'
 import './ImageLinkForm.css'
 
 const ImageLinkForm = () => {
@@ -16,8 +16,6 @@ const ImageLinkForm = () => {
     const image = document.getElementById('inputimage')
     const width = Number(image.width)
     const height = Number(image.height)
-
-    console.log(width, height)
 
     setBox({
       leftCol: clarifaiFace.left_col * width,

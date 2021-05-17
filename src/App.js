@@ -1,26 +1,28 @@
 import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-// import Signin from './components/Signin/Signin';
-// import Register from './components/Register/Register';
-// import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import Signin from './components/Signin/Signin'
+import Register from './components/Register/Register'
+import Navigation from './components/Navigation/Navigation'
 
-import './App.css';
-import ParticleComponent from './components/Particles/Particles';
+import './App.css'
+import Home from './components/Home/Home'
+import ParticleComponent from './components/Particles/Particles'
 
 const App = () => {
     return (
-      <div className="App">
-        <ParticleComponent />
-          <div>
-            <Logo />
-            <ImageLinkForm />
-            <FaceRecognition />
-          </div>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <ParticleComponent />
+          <Navigation />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/signin" component={Signin} />
+            <Route exact path="/register" component={Register} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     )
 }
 
-export default App;
+export default App
