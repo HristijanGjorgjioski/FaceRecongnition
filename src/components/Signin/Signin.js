@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom'
+
+import { useAuth } from '../../context/AuthContext'
 
 const Signin = () => {
-  const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-    msg: [],
-  });
+  const { login } = useAuth()
+  const [error, setError] = useState('')
+
+  const emailRef = useRef()
+  const passwordRef = useRef()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,10 +29,7 @@ const Signin = () => {
                 type="email"
                 name="email-address"
                 id="email-address"
-                value={userData.email}
-                onChange={(e) =>
-                  setUserData({ ...userData, email: e.target.value })
-                }
+                ref={emailRef}
                 required
               />
             </div>
@@ -40,10 +40,7 @@ const Signin = () => {
                 type="password"
                 name="password"
                 id="password"
-                value={userData.password}
-                onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
-                }
+                ref={passwordRef}
                 required
               />
             </div>
@@ -51,7 +48,7 @@ const Signin = () => {
           <div className="">
             <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in" />
           </div>
-          {userData.msg.length > 0 ? <h4>{userData.msg[0]}</h4> : <div></div>}
+          {error && <h4>{error}</h4>}
         </form>
       </main>
     </article>
