@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const Register = () => {
+  const inputClassNames = 'pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
+  const articleClassNames = 'br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center'
+
   const { signup } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -21,14 +24,14 @@ const Register = () => {
       await signup(emailRef.current.value, passwordRef.current.value)
       history.push('/')  
     } catch (error) {
-      setError('Failed to create an account')
+      setError('Check if your email and password are valid. Password must have 6 charachters')
     }
 
     setLoading(false)
   }
 
   return (
-    <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 center">
+    <article className={articleClassNames}>
       <main className="pa4 black-80">
         {error && <h4>{error}</h4>}
         <form onSubmit={handleSubmit} className="measure">
@@ -36,15 +39,15 @@ const Register = () => {
             <legend className="f1 fw6 ph0 mh0">Register</legend>
             <div className="mt3">
               <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
-              <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" required ref={nameRef} />
+              <input className={inputClassNames} type="text" required ref={nameRef} />
             </div>
             <div className="mt3">
               <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-              <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" required ref={emailRef} />
+              <input className={inputClassNames} type="email" required ref={emailRef} />
             </div>
             <div className="mv3">
               <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-              <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" required ref={passwordRef} />
+              <input className={inputClassNames} type="password" required ref={passwordRef} />
             </div>
           </fieldset>
           <div className="">
