@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
 
     const login = (email, password) => auth.signInWithEmailAndPassword(email, password)
 
+    const logout = () => auth.signOut()
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user)
@@ -25,7 +27,8 @@ export const AuthProvider = ({ children }) => {
     const value = {
         currentUser,
         signup,
-        login
+        login, 
+        logout
     }
 
     return (
