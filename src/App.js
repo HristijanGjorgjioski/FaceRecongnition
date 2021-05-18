@@ -8,6 +8,7 @@ import Navigation from './components/Navigation/Navigation'
 import './App.css'
 import Home from './components/Home/Home'
 import ParticleComponent from './components/Particles/Particles'
+import PrivateRoute from './utils/PrivateRoute'
 
 const App = () => {
     return (
@@ -16,7 +17,7 @@ const App = () => {
           <ParticleComponent />
           <Navigation />
           <Switch>
-            <Route exact path="/" component={Home} />
+            <PrivateRoute exact path="/" component={Home} />
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/register" component={Register} />
           </Switch>
