@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'tachyons';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import 'tachyons'
 
-import './index.css';
+import './index.css'
 
-import App from './App';
-import { AuthProvider } from './context/AuthContext';
-import { ImageProvider } from './context/ImageContext';
+import App from './App'
+import { AuthProvider } from './context/AuthContext'
+import { ImageProvider } from './context/ImageContext'
 
 ReactDOM.render(
     <AuthProvider>
@@ -15,4 +15,4 @@ ReactDOM.render(
         </ImageProvider>
     </AuthProvider>,
     document.getElementById('root')
-);
+)

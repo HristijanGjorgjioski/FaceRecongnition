@@ -11,19 +11,19 @@ import ParticleComponent from './components/Particles/Particles'
 import PrivateRoute from './utils/PrivateRoute'
 
 const App = () => {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <ParticleComponent />
-          <Navigation />
-          <Switch>
-            <PrivateRoute exact path="/" component={Home} />
-            <Route exact path="/signin" component={Signin} />
-            <Route exact path="/register" component={Register} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    )
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <ParticleComponent />
+        <Navigation />
+        <Switch>
+          <PrivateRoute exact path="/" component={Home} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/register" component={Register} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  )
 }
 
 export default App
