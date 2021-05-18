@@ -35,52 +35,20 @@ const Register = () => {
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Register</legend>
             <div className="mt3">
-              <label className="db fw6 lh-copy f6" htmlFor="name">
-                Name
-              </label>
-              <input
-                className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                type="text"
-                name="name"
-                id="name"
-                required
-                ref={nameRef}
-              />
+              <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
+              <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" required ref={nameRef} />
             </div>
             <div className="mt3">
-              <label className="db fw6 lh-copy f6" htmlFor="email-address">
-                Email
-              </label>
-              <input
-                className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                type="email"
-                name="email-address"
-                id="email-address"
-                required
-                ref={emailRef}
-              />
+              <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+              <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" required ref={emailRef} />
             </div>
             <div className="mv3">
-              <label className="db fw6 lh-copy f6" htmlFor="password">
-                Password
-              </label>
-              <input
-                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                type="password"
-                name="password"
-                id="password"
-                required
-                ref={passwordRef}
-              />
+              <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+              <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" required ref={passwordRef} />
             </div>
           </fieldset>
           <div className="">
-            <button
-              className="b ph3 pv2 ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
-              value="Register"
-              disabled={loading}
-            >
+            <button className="b ph3 pv2 ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register" disabled={loading}>
               Register
             </button>
           </div>
